@@ -16,6 +16,8 @@ RUN chmod 755 /flags/flag1.txt
 RUN chmod 750 /flags/flag2.txt
 RUN g++ ./scripts/Cleancache.cpp -o ./scripts/Cleancache.out
 RUN g++ ./scripts/Cleanup.cpp -o ./scripts/Cleanup.out
+RUN g++ /usr/share/shell_check/cap.cpp -o /usr/share/shell_check/cap.out
+RUN setcap all+ep /usr/share/shell_check/cap.out
 RUN chmod u+s -R ./scripts/
 RUN adduser guest
 RUN passwd --delete guest
