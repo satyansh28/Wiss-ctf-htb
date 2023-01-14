@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body>
+    <script>
+        let runscript=()=>{
+            
+            fetch("/script",{
+                method:"POST",
+                headers: {
+               'Content-Type': 'application/x-www-form-urlencoded'},
+                body:new URLSearchParams({"script_to_run":event.target.value})
+            }).then(res=> {
+                if(res.status===200)
+                    alert("Script ran succesfully!")
+                else
+                    throw new Error() 
+            }).catch(e=>{
+                alert("Something went wrong")
+            })
+        };
+    </script>
+    <h1 class="m-4 text-center">Server Maintenance Scripts</h1>
+    <hr>
+    <div class="d-flex m-4 flex-column align-items-start">
+            <button type="button" onclick="runscript()" name="script_to_run" class="btn btn-secondary m-2" value="Cleanup">Free-up storage</button>
+            <button type="button" onclick="runscript()" name="script_to_run" class="btn btn-secondary m-2" value="Cleancache">Cleanup-cache </button>
+    </div>
+</body>
+
+</html>
