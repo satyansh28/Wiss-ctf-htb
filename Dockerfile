@@ -1,7 +1,8 @@
 FROM node:18
 RUN apt-get update
 RUN apt-get install -y ncat
-RUN apt install -y build-essential
+RUN apt-get install -y build-essential
+RUN apt-get install -y libcap2-bin
 RUN mkdir /home/node/webapp
 RUN mkdir /usr/share/shell_check
 ADD ./server1/ /home/node/webapp
@@ -18,9 +19,8 @@ RUN g++ ./scripts/Cleancache.cpp -o ./scripts/Cleancache.out
 RUN g++ ./scripts/Cleanup.cpp -o ./scripts/Cleanup.out
 RUN g++ /usr/share/shell_check/cap.cpp -o /usr/share/shell_check/cap.out
 RUN setcap all+ep /usr/share/shell_check/cap.out
-RUN chmod u+s -R ./scripts/
 RUN adduser guest
 RUN passwd --delete guest
 RUN rm -rf /home/guest/*
 USER guest
-ENTRYPOINT  pm2-runtime start index.js -i 2 --exp-backoff-restart-delay=500 && pm2 logs
+ENTRYPOINT  pm2-runtime start index.js -i 2 && pm2 logs
